@@ -1,6 +1,5 @@
 from django.db import models
 from django.contrib.auth import get_user_model
-
 from core.models import PublishedModel
 from .querysets import PostQuerySet
 
@@ -26,7 +25,7 @@ class Category(PublishedModel):
         ),
     )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
     class Meta:
@@ -43,7 +42,7 @@ class Location(PublishedModel):
 
     name = models.CharField(max_length=256, verbose_name='Название места')
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.name
 
     class Meta:
@@ -88,12 +87,19 @@ class Post(PublishedModel):
         verbose_name='Категория',
         related_name='posts',
     )
+    image = models.ImageField(
+        'Изображение',
+        upload_to='post_images/',
+        blank=True,
+        null=True,
+        help_text='Загрузите изображение к посту (необязательно)',
+    )
     objects = PostQuerySet.as_manager()
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.title
 
-    def get_location_display(self):
+    def get_location_display(self) -> str:
         """
         Метод для получения отображаемого названия локации.
 
@@ -107,3 +113,38 @@ class Post(PublishedModel):
         verbose_name = 'публикация'
         verbose_name_plural = 'Публикации'
         ordering = ('-pub_date',)
+
+
+class Comment(models.Model):
+    """
+    Модель комментариев к постам.
+
+    Комментарии привязываются к конкретному посту и автору.
+    Содержат текст и временную метку создания.
+    """
+
+    MAX_TITLE_LENGTH_IN_STR = 20
+
+    post = models.ForeignKey(
+        Post,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Публикация',
+    )
+    author = models.ForeignKey(
+        User,
+        on_delete=models.CASCADE,
+        related_name='comments',
+        verbose_name='Автор',
+    )
+    text = models.TextField('Текст комментария')
+    created_at = models.DateTimeField('Добавлено', auto_now_add=True)
+
+    class Meta:
+        verbose_name = 'комментарий'
+        verbose_name_plural = 'Комментарии'
+        ordering = ('created_at',)
+
+    def __str__(self) -> str:
+        short_title = self.post.title[:self.MAX_TITLE_LENGTH_IN_STR]
+        return f'Комментарий от {self.author.username} к посту {short_title}'
