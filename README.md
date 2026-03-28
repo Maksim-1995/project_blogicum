@@ -23,7 +23,7 @@ Blogicum — это полнофункциональная блог-платфо
 
 
 ## 🚀 Быстрый старт
-
+https://maksim1995k.pythonanywhere.com/
 ### Клонирование репозитория
 ```bash
 git clone https://github.com/Maksim-1995/project_blogicum
