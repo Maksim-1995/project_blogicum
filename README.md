@@ -18,12 +18,15 @@ Blogicum — это полнофункциональная блог-платфо
 - **База данных:** SQLite для разработки
 - **ORM:** Django ORM, оптимизированные запросы (select_related, prefetch_related)
 - **Тестирование:** pytest
-- **Frontend:** Bootstrap 5, FontAwesome, jQuery (для AJAX-комментариев)
+- **Frontend:** Bootstrap 5, FontAwesome, jQuery
 - **Инструменты:** Git, pipenv/venv, pre-commit (flake8, black)
 
 
 ## 🚀 Быстрый старт
 https://maksim1995k.pythonanywhere.com/
-### Клонирование репозитория
-```bash
+### Клонирование репозитория 
+```bash 
 git clone https://github.com/Maksim-1995/project_blogicum
+
+## Автор
+https://github.com/Maksim-1995/
